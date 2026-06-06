@@ -30,8 +30,9 @@ a{color:inherit;text-decoration:none}
 .hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:2rem}
 .hbadge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:13px;padding:5px 13px;border-radius:20px}
 .hbadge.gold{background:rgba(250,199,117,.2);border-color:rgba(250,199,117,.5);color:#FAC775}
-.hero-cta{display:inline-block;background:#fff;color:#8B1A1A;font-weight:700;font-size:14px;padding:13px 34px;border-radius:30px;cursor:pointer;border:none;transition:transform .15s}
-.hero-cta:hover{transform:translateY(-1px)}
+.hero-cta{display:inline-block;background:#FAC775;color:#3D1A00;font-weight:800;font-size:18px;padding:18px 48px;border-radius:50px;cursor:pointer;border:none;letter-spacing:.03em;box-shadow:0 6px 28px rgba(250,199,117,.55),0 2px 8px rgba(0,0,0,.15);transition:transform .15s,box-shadow .15s;animation:ctaPulse 2.2s ease-in-out infinite}
+.hero-cta:hover{transform:translateY(-3px);box-shadow:0 10px 36px rgba(250,199,117,.7),0 4px 12px rgba(0,0,0,.2);animation:none}
+@keyframes ctaPulse{0%,100%{box-shadow:0 6px 28px rgba(250,199,117,.55),0 2px 8px rgba(0,0,0,.15)}50%{box-shadow:0 6px 40px rgba(250,199,117,.9),0 2px 16px rgba(250,199,117,.4)}}
 
 /* ===== DIVIDER ===== */
 .divider{height:4px;background:linear-gradient(90deg,#8B1A1A,#FAC775,#0056D2,#3B6D11)}
@@ -217,7 +218,8 @@ a{color:inherit;text-decoration:none}
 .footer-cta h2{font-size:28px;font-weight:700;color:#fff;margin-bottom:.6rem}
 .footer-cta p{font-size:16px;color:rgba(255,255,255,.75);margin-bottom:1.75rem;max-width:500px;margin-left:auto;margin-right:auto}
 .fcta-buttons{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.btn-white{background:#fff;color:#8B1A1A;font-weight:700;font-size:14px;padding:11px 28px;border-radius:30px;cursor:pointer;border:none}
+.btn-white{background:#FAC775;color:#3D1A00;font-weight:800;font-size:17px;padding:15px 40px;border-radius:50px;cursor:pointer;border:none;box-shadow:0 4px 20px rgba(250,199,117,.5);transition:transform .15s,box-shadow .15s}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(250,199,117,.7)}
 .btn-outline{background:transparent;color:#fff;font-weight:600;font-size:14px;padding:10px 28px;border-radius:30px;border:1px solid rgba(255,255,255,.4);cursor:pointer}
 .footer-contacts{margin-top:1.75rem;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 .footer-contacts a{font-size:14px;color:rgba(255,255,255,.6)}
@@ -262,6 +264,23 @@ a{color:inherit;text-decoration:none}
   .site-header img{width:140px}
 }
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1344643177577184');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1344643177577184&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -985,7 +1004,10 @@ async function submitForm() {
   // Wait for both (but don't block UX too long)
   await Promise.allSettled(promises);
 
-  document.getElementById('formBlock').style.display = 'none';
+  
+    // Meta Pixel — событие Lead
+    fbq('track', 'Lead', {content_name: lead.facultyLabel, content_category: lead.faculty});
+    document.getElementById('formBlock').style.display = 'none';
   document.getElementById('successBlock').style.display = 'block';
   document.getElementById('successName').textContent = fname;
   document.getElementById('successPhone').textContent = phone;
